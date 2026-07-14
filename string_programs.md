@@ -9,7 +9,7 @@
 5. Remove All Spaces from a String.
 
 6. Count the Frequency of Each Character.
-
+```
   word =  "banana"
   seen = []
   my_dict = {}
@@ -20,7 +20,7 @@
           seen.append(i)
           my_dict[i] = 1
   print(my_dict)
-
+```
 8. Find the First Non-Repeating Character.
 
 9. Check whether Two Strings are Anagrams.
