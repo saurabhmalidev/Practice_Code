@@ -1,6 +1,21 @@
 1. Reverse a String
 ```
+s = 'abcdef'
+s = list(s)
 
+for i in range(int(len(s)/2)):
+    temp = s[i]             # Assigning 1st character to String
+    s[i] = s[-(i+1)]        # Assigning last character to 1st position, last element is -(i+1)
+    s[-(i+1)] = temp        # Assigning Last element the temp value
+
+    print(s)
+#------------------------
+s = "abcdef"
+rev = ""
+for ch in s:
+    rev = ch + rev          # rev  = b + a
+print(rev)
+#------------------------
 ```
 2. Check whether a String is a Palindrome.
 ```
