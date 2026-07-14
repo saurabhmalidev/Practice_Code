@@ -1,13 +1,23 @@
 1. Reverse a String
+```
 
+```
 2. Check whether a String is a Palindrome.
+```
 
+```
 3. Count the Number of Vowels in a String.
+```
 
+```
 4. Count Uppercase and Lowercase Characters.
+```
 
+```
 5. Remove All Spaces from a String.
+```
 
+```
 6. Count the Frequency of Each Character.
 ```
   word =  "banana"
@@ -22,29 +32,55 @@
   print(my_dict)
 ```
 8. Find the First Non-Repeating Character.
+```
 
+```
 9. Check whether Two Strings are Anagrams.
+```
 
+```
 10. Count the Number of Occurrences of a Substring (without using .count()).
+```
 
+```
 11. Replace Every Space with a Hyphen (-).
+```
 
+```
 12. Capitalize the First Letter of Every Word (without using .title()).
+```
 
+```
 13. Find the Longest Word in a Sentence.
+```
 
+```
 14. Compress a String (e.g., aaabbcccc → a3b2c4).
+```
 
+```
 15. Remove Duplicate Characters while Preserving Order.
+```
 
+```
 16. Check whether One String is a Rotation of Another.
+```
 
+```
 17. Find the Most Frequent Character in a String.
+```
 
+```
 18. Reverse Each Word in a Sentence while Keeping the Word Order the Same.
+```
 
+```
 19. Remove Consecutive Duplicate Characters.
+```
 
+```
 20. Check whether Two Strings are Isomorphic.
+```
 
+```
 21. Implement Left, Right, and Center String Alignment without using .ljust(), .rjust(), or .center().
