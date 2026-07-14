@@ -26,9 +26,8 @@ print(s[::-1])
 # reversed() + join()
 s = "abcdef"
 print("".join(reversed(s)))
-
-
 ```
+
 2. Check whether a String is a Palindrome.
 ```
 # A palindrome is a sequence (string, number, etc.) that reads the same forward and backward.
@@ -52,8 +51,6 @@ else:
 ```
 3. Count the Number of Vowels in a String.
 ```
-#3. Count the Number of Vowels in a String.
-```
 s = 'sdkjdfkdlnfe'
 count = 0
 for i in s:
@@ -76,8 +73,8 @@ for i in s:
         pass
 print(f"Lower Count : {count_lower}")
 print(f"Upper Count : {count_upper}")
-
 ```
+
 5. Remove All Spaces from a String.
 ```
 statement = 'hello people of India'
