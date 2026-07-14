@@ -66,7 +66,7 @@ print(count)
 s = 'asJfbasDSDA'
 count_lower = 0
 count_upper = 0
-=
+
 for i in s:
     if i.islower():
         count_lower +=1
@@ -76,12 +76,15 @@ for i in s:
         pass
 print(f"Lower Count : {count_lower}")
 print(f"Upper Count : {count_upper}")
-=
 
 ```
 5. Remove All Spaces from a String.
 ```
-
+statement = 'hello people of India'
+i_state = list(statement.split(" "))
+result = ''.join(i_state)
+print(statement)
+print(result)
 ```
 6. Count the Frequency of Each Character.
 ```
@@ -98,11 +101,43 @@ print(f"Upper Count : {count_upper}")
 ```
 8. Find the First Non-Repeating Character.
 ```
+s = 'yasdbkmasbdbykmn'
+my_dict = {}
+for i in s:
+    if i in my_dict:
+        my_dict[i] += 1
+    else:
+        my_dict[i] = 1
 
+for key, value in my_dict.items():
+    if value == 1:
+        print(key)
+        break
 ```
 9. Check whether Two Strings are Anagrams.
 ```
+# An anagram is when two strings contain exactly the same characters with the same frequencies, 
+# but the characters may be in a different order.
+s1 = "listen"
+s2 = "silent"
 
+if len(s1) != len(s2):    #<-----------lecgth check 1st
+    print("Not a Anagram")
+else:
+    s1l = list(sorted(s1))
+    s2l = list(sorted(s2))
+    flag = True
+    for i in range(len(s1)):
+        if s1l[i] != s2l[i]:
+            flag = False
+            break
+        else:
+            pass
+            
+    if flag:
+        print("Anagram")
+    else:
+        print("Not Anagram")
 ```
 10. Count the Number of Occurrences of a Substring (without using .count()).
 ```
