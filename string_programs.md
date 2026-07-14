@@ -113,8 +113,7 @@ for key, value in my_dict.items():
 ```
 9. Check whether Two Strings are Anagrams.
 ```
-# An anagram is when two strings contain exactly the same characters with the same frequencies, 
-# but the characters may be in a different order.
+# An anagram is when two strings contain exactly the same characters with the same frequencies, but the characters may be in a different order.
 s1 = "listen"
 s2 = "silent"
 
@@ -138,11 +137,28 @@ else:
 ```
 10. Count the Number of Occurrences of a Substring (without using .count()).
 ```
+s = 'abcdcdc'
+subs = 'cdc'
 
+count = 0
+for i in range((len(s)-len(subs)+1)):  #<------This Range is Important
+    for j in range(len(subs)):
+        if s[i+j] != subs[j]:
+            break
+    else:                              #<------This else belongs to teh For Loop its a For-else Loop
+        count +=1
+    
+print(count)
+
+NOTE: The else in a for...else loop does not mean: "If the if condition is false..."
+Instead, it means: "Execute this block if the for loop finishes normally (without hitting a break)." 
 ```
 11. Replace Every Space with a Hyphen (-).
 ```
-
+sent = "I love India"
+sent2 = list(sent.split(' '))
+result ='-'.join(sent2)
+print(result)
 ```
 12. Capitalize the First Letter of Every Word (without using .title()).
 ```
@@ -181,3 +197,54 @@ else:
 
 ```
 21. Implement Left, Right, and Center String Alignment without using .ljust(), .rjust(), or .center().
+#Replace all ______ with rjust, ljust or center. 
+
+thickness = int(input()) #This must be an odd number
+c = 'H'
+
+#Top Cone
+for i in range(thickness):
+    print((c*i).rjust(thickness-1)+c+(c*i).ljust(thickness-1))
+
+#Top Pillars
+for i in range(thickness+1):
+    print((c*thickness).center(thickness*2)+(c*thickness).center(thickness*6))
+
+#Middle Belt
+for i in range((thickness+1)//2):
+    print((c*thickness*5).center(thickness*6))    
+
+#Bottom Pillars
+for i in range(thickness+1):
+    print((c*thickness).center(thickness*2)+(c*thickness).center(thickness*6))    
+
+#Bottom Cone
+for i in range(thickness):
+    print(((c*(thickness-i-1)).rjust(thickness)+c+(c*(thickness-i-1)).ljust(thickness)).rjust(thickness*6))
+
+
+    H
+   HHH
+  HHHHH
+ HHHHHHH
+HHHHHHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHHHHHHHHHHHHHHHHHHHHHH
+  HHHHHHHHHHHHHHHHHHHHHHHHH
+  HHHHHHHHHHHHHHHHHHHHHHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+  HHHHH               HHHHH
+                   HHHHHHHHHHH
+                    HHHHHHHHH
+                     HHHHHH
+                       HHH
+                        H   
