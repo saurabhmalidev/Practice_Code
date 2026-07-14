@@ -1,5 +1,7 @@
 1. Reverse a String
 ```
+print(s)
+#------------------------
 # List + Swap
 s = 'abcdef'
 s = list(s)
@@ -21,14 +23,34 @@ print(rev)
 s = "abcdef"
 print(s[::-1])
 #------------------------
-#reversed() + join()
+# reversed() + join()
 s = "abcdef"
 print("".join(reversed(s)))
-#------------------------
+
+
 ```
 2. Check whether a String is a Palindrome.
 ```
+# A palindrome is a sequence (string, number, etc.) that reads the same forward and backward.
+s = 'abcdcba'
 
+is_pal = True                     #<----this thinking of FLAG is important
+for i in range(int(len(s)/2)):    #<----When middle element need not to process skip +1
+
+    if s[i] != s[-(i+1)]:
+        is_pal = False
+        break                     # Once condition met no need to check further
+    else:
+        pass
+
+if is_pal:
+    print("Palindrome")
+else:
+    print("Not a Palindrome")
+
+# Thinking:
+1. Does the middle element need to be processed - if yes use: range(len(s)//2 + 1)
+2. Does the middle element need to be processed - if no  use: range(len(s)//2)
 ```
 3. Count the Number of Vowels in a String.
 ```
