@@ -197,8 +197,7 @@ print(result)
 
 ```
 21. Implement Left, Right, and Center String Alignment without using .ljust(), .rjust(), or .center().
-#Replace all ______ with rjust, ljust or center. 
-
+```
 thickness = int(input()) #This must be an odd number
 c = 'H'
 
@@ -248,3 +247,4 @@ HHHHHHHHH
                      HHHHHH
                        HHH
                         H   
+```
