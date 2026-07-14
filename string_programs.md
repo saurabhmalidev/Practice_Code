@@ -36,13 +36,11 @@ s = 'abcdcba'
 
 is_pal = True                     #<----this thinking of FLAG is important
 for i in range(int(len(s)/2)):    #<----When middle element need not to process skip +1
-
     if s[i] != s[-(i+1)]:
         is_pal = False
         break                     # Once condition met no need to check further
     else:
         pass
-
 if is_pal:
     print("Palindrome")
 else:
@@ -54,10 +52,31 @@ else:
 ```
 3. Count the Number of Vowels in a String.
 ```
-
+#3. Count the Number of Vowels in a String.
+```
+s = 'sdkjdfkdlnfe'
+count = 0
+for i in s:
+    if i in ['a','e','i','o','u']:    #or you can use "if i in 'aeiou':"
+        count += 1
+print(count) 
 ```
 4. Count Uppercase and Lowercase Characters.
 ```
+s = 'asJfbasDSDA'
+count_lower = 0
+count_upper = 0
+=
+for i in s:
+    if i.islower():
+        count_lower +=1
+    elif i.isupper():
+        count_upper +=1
+    else:
+        pass
+print(f"Lower Count : {count_lower}")
+print(f"Upper Count : {count_upper}")
+=
 
 ```
 5. Remove All Spaces from a String.
