@@ -248,3 +248,40 @@ HHHHHHHHH
                        HHH
                         H   
 ```
+
+22. HACKERRANK: Q. You are given a string s and width w, Your task is to wrap the string into a paragraph of width w.
+```
+import textwrap
+def wrap(string, max_width):
+    print(textwrap.fill(string, max_width))
+
+if __name__ == '__main__':
+    string = 'ABCDEFGHIJKLIMNOQRSTUVWXYZ'
+    max_width = 4
+    result = wrap(string, max_width)
+```
+```
+FORMAT :  textwrap.fill() : print(textwrap.fill(text, width=20))
+```
+23. HACKERRANK : Q. Given an integer n print the following values till n, for each integer n from  to : Decimal, Octal, Hexadecimal (capitalized), Binary.  Four values must be printed on a single line. Each value should be space-padded to match the width of the binary value of n. (5 Yes, 7 No).
+```
+def print_formatted(number):
+    # your code goes here
+    p = (len(bin(int(number)))-2)  # Always 2 for Binary
+    for i in range(1,number+1):
+        print(  f"{i:>{p}}", 
+                f"{oct(i)[2:]:>{p}}", 
+                f"{hex(i)[2:].upper():>{p}}", 
+                f"{bin(i)[2:].upper():>{p}}"
+            )
+if __name__ == '__main__':
+    n = 17
+    print_formatted(n)
+
+# Things Covered:
+# Padding ->
+# funtion to use -> bin, hex, oct
+# uppercase -> word.upper()
+# how to use slice to create formatted output -> [2:]
+# How to remove extra element using slicing and why substracted 2 from padding length.
+```
