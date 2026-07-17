@@ -264,7 +264,7 @@ if __name__ == '__main__':
 FORMAT :  textwrap.fill() : print(textwrap.fill(text, width=20))
 ```
 23. HACKERRANK : Q. Given an integer n print the following values till n, for each integer n from  to : Decimal, Octal, Hexadecimal (capitalized), Binary.  Four values must be printed on a single line. Each value should be space-padded to match the width of the binary value of n. (5 Yes, 7 No).
-```
+```javascript showLineNumbers
 def print_formatted(number):
     # your code goes here
     p = (len(bin(int(number)))-2)  # Always 2 for Binary
@@ -277,7 +277,8 @@ def print_formatted(number):
 if __name__ == '__main__':
     n = 17
     print_formatted(n)
-
+```
+```
 # Things Covered:
 # Padding ->
 # funtion to use -> bin, hex, oct
