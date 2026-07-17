@@ -249,7 +249,7 @@ HHHHHHHHH
                         H   
 ```
 
-22. HACKERRANK: Q. You are given a string s and width w, Your task is to wrap the string into a paragraph of width w.
+**22. HACKERRANK: Q. You are given a string s and width w, Your task is to wrap the string into a paragraph of width w.**
 ```
 import textwrap
 def wrap(string, max_width):
@@ -263,7 +263,9 @@ if __name__ == '__main__':
 ```
 FORMAT :  textwrap.fill() : print(textwrap.fill(text, width=20))
 ```
-23. HACKERRANK : Q. Given an integer n print the following values till n, for each integer n from  to : Decimal, Octal, Hexadecimal (capitalized), Binary.  Four values must be printed on a single line. Each value should be space-padded to match the width of the binary value of n. (5 Yes, 7 No).
+**23. HACKERRANK : Q. Given an integer n print the following values till n, for each integer n from  to : Decimal, Octal, Hexadecimal (capitalized), Binary.  Four values must be printed on a single line. Each value should be space-padded to match the width of the binary value of n. (5 Yes, 7 No).**
+
+
 ```javascript showLineNumbers
 def print_formatted(number):
     # your code goes here
