@@ -1,8 +1,6 @@
 1. Reverse a String
 ```
-print(s)
-#------------------------
-# List + Swap
+#1.1 List + Swap
 s = 'abcdef'
 s = list(s)
 for i in range(int(len(s)/2)):
@@ -10,20 +8,18 @@ for i in range(int(len(s)/2)):
     s[i] = s[-(i+1)]        # Assigning last character to 1st position, last element is -(i+1)
     s[-(i+1)] = temp        # Assigning Last element the temp value
 
-print(s)
-#------------------------
-# Loop (ch + rev)
+#1.2 Loop (ch + rev)
 s = "abcdef"
 rev = ""
 for ch in s:
     rev = ch + rev          # rev  = b + a
 print(rev)
-#------------------------
-# Slicing
+
+#1.3 Slicing
 s = "abcdef"
 print(s[::-1])
-#------------------------
-# reversed() + join()
+
+#1.4 reversed() + join()
 s = "abcdef"
 print("".join(reversed(s)))
 ```
