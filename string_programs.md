@@ -107,7 +107,7 @@ for key, value in my_dict.items():
         print(key)
         break
 ```
-9. Check whether Two Strings are Anagrams.
+**9. Check whether Two Strings are Anagrams.**
 ```
 # An anagram is when two strings contain exactly the same characters with the same frequencies, but the characters may be in a different order.
 s1 = "listen"
@@ -131,7 +131,7 @@ else:
     else:
         print("Not Anagram")
 ```
-10. Count the Number of Occurrences of a Substring (without using .count()).
+**10. Count the Number of Occurrences of a Substring (without using .count()).**
 ```
 s = 'abcdcdc'
 subs = 'cdc'
@@ -149,28 +149,80 @@ print(count)
 NOTE: The else in a for...else loop does not mean: "If the if condition is false..."
 Instead, it means: "Execute this block if the for loop finishes normally (without hitting a break)." 
 ```
-11. Replace Every Space with a Hyphen (-).
+**11. Replace Every Space with a Hyphen (-).**
 ```
 sent = "I love India"
 sent2 = list(sent.split(' '))
 result ='-'.join(sent2)
 print(result)
 ```
-12. Capitalize the First Letter of Every Word (without using .title()).
+**12. Capitalize the First Letter of Every Word (without using .title()).**
 ```
+words_l = list(s.split(' '))
+word_result = []
 
-```
-13. Find the Longest Word in a Sentence.
-```
+for word in words_l:
+    #for ch in word:  this will be wrong as character migh repeat
+    for i in range(len(word)):
+        if i == 0:  
+            word_result.append(word[i].upper())
+        else:
+            word_result.append(word[i])
+    word_result.append(' ')
 
+word_result = ''.join(word_result)
+print(word_result)
+```
+**13. Find the Longest Word in a Sentence.**
+```
+s = 'Find the Longest Word in a Sentence asdabdahdbfjhadbf'
+wrd_list = list(s.split(' '))
+max_lw = ''
+
+for i in range(len(wrd_list)):
+    if len(wrd_list[i]) > len(max_lw):
+        max_lw = wrd_list[i]
+
+print(max_lw)
 ```
 14. Compress a String (e.g., aaabbcccc → a3b2c4).
 ```
+# Two ways to do this, either by dict or another manual
+s = 'aaabbbcccddasddddmmrrr'
+seen = []
+my_dict = {}
+
+for ch in s:
+    if ch in seen:
+        my_dict[ch] += 1
+    else:
+        seen.append(ch)
+        my_dict[ch] = 1
+print(my_dict)
+
+for key, value in my_dict.items():
+    print(f"{key}{value}",end='')
+# BUT THIS IS NOT STRING COMPRESSION, string compression does not work like frequency counting.
+```
+```
+
+
+
+
 
 ```
 15. Remove Duplicate Characters while Preserving Order.
 ```
-
+s = 'aaabbbcccddasddddmmrrr'
+seen = []
+result = []
+for ch in s:
+    if ch in seen:
+        pass
+    else:
+        seen.append(ch)
+        result.append(ch)
+print(result) 
 ```
 16. Check whether One String is a Rotation of Another.
 ```
