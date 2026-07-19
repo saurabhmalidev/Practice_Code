@@ -1,4 +1,4 @@
-**Q. Customers with Zero Orders**
+**Q1. Customers with Zero Orders**
 | Column      | Data Type | Description          |
 | ----------- | --------- | -------------------- |
 | customer_id | INT       | Primary Key          |
