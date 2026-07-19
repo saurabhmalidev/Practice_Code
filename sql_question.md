@@ -110,9 +110,8 @@ Indexing for performance
 Batch vs incremental processing in Data Engineering
 Adapting SQL to changing business requirements
 ```
-
-===========================================================================================================
-===========================================================================================================
+======================================
+======================================
 **SQL Interview #4 — Find Duplicate Customer Emails**
 
 | Column        | Description    |
