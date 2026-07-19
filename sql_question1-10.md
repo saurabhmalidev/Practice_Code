@@ -1,13 +1,13 @@
-###Q1. Find Customers Who Never Placed an Order 
-Q2. Find the Second Highest Salary
-Q3. Top Selling Products
-Q4. Find Duplicate Email Addresses
-Q5. Month-over-Month Sales Growth
-Q6. Running Total of Customer Orders
-Q7. Top 3 Highest Paid Employees in Each Department
-Q8. Customers with Consecutive Purchase Days.
-Q9. First and Last Order for Each Customer
-Q10. Highest Paid Employee(s) in Each Department
+**Q1. Find Customers Who Never Placed an Order. \
+Q2. Find the Second Highest Salary. \
+Q3. Top Selling Products. \
+Q4. Find Duplicate Email Addresses.  \
+Q5. Month-over-Month Sales Growth. \
+Q6. Running Total of Customer Orders. \
+Q7. Top 3 Highest Paid Employees in Each Department. \
+Q8. Customers with Consecutive Purchase Days. \
+Q9. First and Last Order for Each Customer. \
+Q10. Highest Paid Employee(s) in Each Department**
 
 
 ======================================
