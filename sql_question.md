@@ -161,11 +161,11 @@ WHERE email IN (
         HAVING count(*) > 1
         )
 ```
-**Follow Up 05 : Emails differ only by letter case**
-Example:
+**Follow Up 05 : Emails differ only by letter case** \
+Example:\
 abc@gmail.com
 ABC@gmail.com
-Abc@gmail.com     Should these be treated as duplicates?
+Abc@gmail.com     Should these be treated as duplicates? \
 Yes, if the business considers email addresses case-insensitive, convert them to the same case before grouping.
 ```
 SELECT LOWER(email) AS email,
