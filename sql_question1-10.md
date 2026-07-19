@@ -1,4 +1,18 @@
-**Q1. Customers with Zero Orders**
+Q1. Find Customers Who Never Placed an Order
+Q2. Find the Second Highest Salary
+Q3. Top Selling Products
+Q4. Find Duplicate Email Addresses
+Q5. Month-over-Month Sales Growth
+Q6. Running Total of Customer Orders
+Q7. Top 3 Highest Paid Employees in Each Department
+Q8. Customers with Consecutive Purchase Days.
+Q9. First and Last Order for Each Customer
+Q10. Highest Paid Employee(s) in Each Department
+
+
+======================================
+======================================
+**Q1. Find Customers Who Never Placed an Order**
 | Column      | Data Type | Description          |
 | ----------- | --------- | -------------------- |
 | customer_id | INT       | Primary Key          |
@@ -110,6 +124,93 @@ Indexing for performance
 Batch vs incremental processing in Data Engineering
 Adapting SQL to changing business requirements
 ```
+======================================
+======================================
+
+**Q2. Find the Second Highest Salary**
+
+```
+# ONLY SALARY
+SELECT MAX(salary) AS second_highest_salary
+FROM employee
+WHERE salary < (
+    SELECT MAX(salary)
+    FROM employee
+);
+```
+```
+# EMP name and salary
+SELECT *
+FROM employee
+WHERE salary = ( SELECT MAX(salary) FROM employee WHERE salary <
+                     ( SELECT MAX(salary)
+                      FROM employee
+                     )
+              );
+```
+```
+SELECT emp_id,
+       department,
+       salary
+FROM (
+    SELECT emp_id,
+           department,
+           salary,
+           DENSE_RANK() OVER(ORDER BY salary DESC) AS rnk
+    FROM employee
+) t
+WHERE rnk = 2;
+```
+
+======================================
+======================================
+
+**Question 3: Top Selling Products**
+```
+orders(
+    order_id,
+    product_id,
+    quantity,
+    unit_price,
+    order_date
+)
+
+```
+* Follow up questions:
+* 1. what is the product is repeating in the table
+ ```
+WITH product_revenue AS (
+    SELECT
+        product_id,
+        SUM(quantity * unit_price) AS total_revenue
+    FROM order_items
+    GROUP BY product_id
+),
+
+ranked_products AS (
+    SELECT
+        p.category,
+        p.product_name,
+        pr.total_revenue,
+        DENSE_RANK() OVER (
+            PARTITION BY p.category
+            ORDER BY pr.total_revenue DESC
+        ) AS rnk
+    FROM products p
+    JOIN product_revenue pr
+        ON p.product_id = pr.product_id
+)
+
+SELECT
+    category,
+    product_name,
+    total_revenue
+FROM ranked_products
+WHERE rnk <= 3
+ORDER BY category, rnk;
+```
+
+
 ======================================
 ======================================
 **SQL Interview #4 — Find Duplicate Customer Emails**
@@ -308,6 +409,8 @@ Things to Learn:
 2. Deal with the 1st Row where LAG value will be null, so use cases.
 ```
 
+======================================
+======================================
 **SQL Interview Question 6: Running Total per Customer**
 ```
 | Column      | Type          |
@@ -453,15 +556,16 @@ FROM (
 WHERE cons = 1;
 
 ```
-
-
-**Question 9: First and Last Order for Each Customer**
+======================================
+======================================
+**Question 9: First and Last Order for Each Customer** \
+```
 orders
     order_id,
     customer_id,
     order_date,
     amount
-
+```
 ```
 SELECT customer_id,
        MIN(order_date) AS first_order,
@@ -484,9 +588,9 @@ SELECT customer_id,
        LAST_VALUE(order_date) OVER (PARTITION BY customer_id ORDER BY order_date ROWS BETWEEN UNBOUNDED PRECEDING
               AND UNBOUNDED FOLLOWING ) AS last_order
 FROM orders;
-
-
+```
 ### AND WHY WE DO THIS HAS THE INTERESTING ANSWER.
+
 ```
 ROWS BETWEEN UNBOUNDED PRECEDING
 AND UNBOUNDED FOLLOWING
@@ -509,7 +613,8 @@ The expected answer is:
 
 "Because the default window frame ends at the current row. LAST_VALUE() returns the last row within the current frame, not necessarily the last row in the partition. To get the true last row, I need ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING."
 ```
-
+======================================
+======================================
 
 **Question 10: Highest Paid Employee(s) in Each Department**
 
