@@ -214,13 +214,19 @@ WHERE rnk = 1;
 ```
 If an interviewer asks: How would you optimize this query?
 A strong answer is:
-"For a table with 100 million rows, the SQL query is correct, but I wouldn't scan the entire table every day if only a small amount of new data is added. I'd prefer an incremental ETL approach that processes only new or changed records and maintains a summary table with email counts. This reduces compute time and makes the pipeline scalable."
+"For a table with 100 million rows, the SQL query is correct, but I wouldn't scan the entire table 
+every day if only a small amount of new data is added. I'd prefer an incremental ETL approach that
+processes only new or changed records and maintains a summary table with email counts. This reduces
+compute time and makes the pipeline scalable."
 ```
 ```
 "How would you handle duplicate email detection for a 100-million-row table?"
 
 A strong answer is:
-"I wouldn't run a full GROUP BY on the entire table every day. I'd maintain a summary table containing each email and its count. During the daily ETL, I'd aggregate only the new customer records and MERGE those counts into the summary table. To identify duplicates, I'd simply query WHERE email_count > 1. This incremental approach scales much better than rescanning the full dataset."
+"I wouldn't run a full GROUP BY on the entire table every day. I'd maintain a summary table containing
+ each email and its count. During the daily ETL, I'd aggregate only the new customer records and MERGE
+ those counts into the summary table. To identify duplicates, I'd simply query WHERE email_count > 1.
+This incremental approach scales much better than rescanning the full dataset."
 
 This is the kind of answer that demonstrates both SQL knowledge and Data Engineering thinking.
 ```
