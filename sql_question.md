@@ -110,3 +110,127 @@ Indexing for performance
 Batch vs incremental processing in Data Engineering
 Adapting SQL to changing business requirements
 ```
+
+===========================================================================================================
+===========================================================================================================
+**SQL Interview #4 — Find Duplicate Customer Emails**
+
+| Column        | Description    |
+| ------------- | -------------- |
+| customer_id   | Primary Key    |
+| customer_name | Customer Name  |
+| email         | Customer Email |
+
+OP
+| email                                     |
+| ----------------------------------------- |
+| [alice@gmail.com](mailto:alice@gmail.com) |
+| [bob@gmail.com](mailto:bob@gmail.com)     |
+
+**Q 00 : Find Duplicate Customer Emails**
+```
+SELECT email FROM customers GROUP BY email HAVING count(*) > 1
+```
+
+**Follow Up 01 : Show each duplicate email along with the number of times it appears.**
+```
+SELECT email, count(*) as frequency FROM customers GROUP BY email HAVING count(*) > 1
+```
+**Follow Up 02 : Show the complete details of customers whose email is duplicated.**
+```
+SELECT customer_id, customer_name, email 
+FROM customers 
+WHERE email IN (SELECT email FROM customers GROUP BY email HAVING count(*) > 1)
+```
+**Follow Up 03 : Solve the previous question without using IN.**
+```
+SELECT customer_id, customer_name, email 
+FROM customers c1 
+WHERE EXISTS (SELECT email FROM customers c2 WHERE c1.email = c2.email)
+```
+**Follow Up 04 : Some email values are NULL. Should two NULL values be considered duplicates?**
+```
+SELECT  customer_id, 
+        customer_name, 
+        email 
+FROM customers 
+WHERE email IN (
+        SELECT email 
+        FROM customers 
+        WHERE email IS NOT NULL 
+        GROUP BY email 
+        HAVING count(*) > 1
+        )
+```
+**Follow Up 05 : Emails differ only by letter case**
+Example:
+abc@gmail.com
+ABC@gmail.com
+Abc@gmail.com     Should these be treated as duplicates?
+Yes, if the business considers email addresses case-insensitive, convert them to the same case before grouping.
+```
+SELECT LOWER(email) AS email,
+       COUNT(*) AS frequency
+FROM customers
+WHERE email IS NOT NULL
+GROUP BY LOWER(email)
+HAVING COUNT(*) > 1;       
+```
+
+**Follow Up 06 : Return only one customer record for each duplicate email.**
+```
+WITH ranked_customer_details AS (
+    SELECT customer_id,
+           customer_name,
+           email,
+           ROW_NUMBER() OVER (
+               PARTITION BY email
+               ORDER BY customer_id
+           ) AS rnk
+    FROM customers
+    WHERE email IN (
+        SELECT email
+        FROM customers
+        WHERE email IS NOT NULL
+        GROUP BY email
+        HAVING COUNT(*) > 1
+    )
+)
+
+SELECT customer_id,
+       customer_name,
+       email
+FROM ranked_customer_details
+WHERE rnk = 1;
+```
+**Follow Up 07 : The customers table has 100 million rows.**
+| Scenario                 | Best Approach                    |
+| ------------------------ | -------------------------------- |
+| Small table (10K rows)   | Full table scan                  |
+| Medium table (1M rows)   | Full scan is usually acceptable  |
+| Large table (100M+ rows) | Incremental processing           |
+| Daily ETL                | Process only new records         |
+| Dashboard queries        | Query precomputed summary tables |
+
+```
+If an interviewer asks: How would you optimize this query?
+A strong answer is:
+"For a table with 100 million rows, the SQL query is correct, but I wouldn't scan the entire table every day if only a small amount of new data is added. I'd prefer an incremental ETL approach that processes only new or changed records and maintains a summary table with email counts. This reduces compute time and makes the pipeline scalable."
+```
+```
+"How would you handle duplicate email detection for a 100-million-row table?"
+
+A strong answer is:
+"I wouldn't run a full GROUP BY on the entire table every day. I'd maintain a summary table containing each email and its count. During the daily ETL, I'd aggregate only the new customer records and MERGE those counts into the summary table. To identify duplicates, I'd simply query WHERE email_count > 1. This incremental approach scales much better than rescanning the full dataset."
+
+This is the kind of answer that demonstrates both SQL knowledge and Data Engineering thinking.
+```
+**Follow Up 08 : You need to identify duplicate emails every day in an ETL pipeline. Would you recompute everything daily, or use an incremental approach?**
+Tests:
+Batch vs Incremental Processing
+ETL Design
+Scalability
+
+
+
+
