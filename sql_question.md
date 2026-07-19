@@ -238,4 +238,34 @@ Scalability
 
 
 
+======================================
+======================================
+
+**SQL Interview Question 5: Month-over-Month Sales Growth**
+
+| Column     | Type    |
+| ---------- | ------- |
+| order_id   | INT     |
+| order_date | DATE    |
+| amount     | DECIMAL |
+
+| order_id | order_date | amount |
+| -------- | ---------- | -----: |
+| 1        | 2025-01-05 |    100 |
+| 2        | 2025-01-20 |    200 |
+| 3        | 2025-02-10 |    500 |
+| 4        | 2025-02-18 |    300 |
+| 5        | 2025-03-15 |    600 |
+| 6        | 2025-03-25 |    400 |
+
+OP
+| Month   | Sales | Previous Month Sales | Growth % |
+| ------- | ----: | -------------------: | -------: |
+| 2025-01 |   300 |                 NULL |     NULL |
+| 2025-02 |   800 |                  300 |   166.67 |
+| 2025-03 |  1000 |                  800 |    25.00 |
+
+Formula : ((Current Month Sales - Previous Month Sales) / Previous Month Sales) * 100
+
+**Q00. Month-over-Month Sales Growth**
 
