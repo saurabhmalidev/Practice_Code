@@ -267,5 +267,267 @@ OP
 
 Formula : ((Current Month Sales - Previous Month Sales) / Previous Month Sales) * 100
 
-**Q00. Month-over-Month Sales Growth**
+**Q05. Month-over-Month Sales Growth**
 
+```
+WITH monthlyrev AS
+(
+    SELECT
+        YEAR(order_date) AS yr,
+        MONTH(order_date) AS mmonth,
+        SUM(amount) AS current_month_sale
+    FROM orders
+    GROUP BY YEAR(order_date),
+             MONTH(order_date)
+),
+
+reqdata AS
+(
+    SELECT
+        yr,
+        mmonth,
+        current_month_sale AS CM,
+        LAG(current_month_sale)
+        OVER(
+            ORDER BY yr,mmonth
+        ) AS PM
+    FROM monthlyrev
+)
+
+SELECT
+    yr,
+    mmonth,
+    CM,
+    PM,
+    ((CM-PM)*100.0)/NULLIF(PM,0) AS growth_percentage
+FROM reqdata;
+```
+```
+Things to Learn:
+1. Use of LAG() function, which takes 1 argument
+2. Deal with the 1st Row where LAG value will be null, so use cases.
+```
+
+**SQL Interview Question 6: Running Total per Customer**
+```
+| Column      | Type          |
+| ----------- | ------------- |
+| order_id    | INT           |
+| customer_id | INT           |
+| order_date  | DATE          |
+| amount      | DECIMAL(10,2) |
+```
+```
+SELECT customer_id,
+       order_date,
+       amount,
+       SUM(amount) OVER(
+           PARTITION BY customer_id
+           ORDER BY order_date
+       ) AS running_total
+FROM orders;
+```
+```
+Whenever you see a window function, train yourself to ask two questions:
+Which rows belong to the partition? :  (PARTITION BY customer_id)
+Which rows belong to the frame? : 
+(UNBOUNDED PRECEDING → CURRENT ROW)
+(1 PRECEDING → CURRENT ROW)
+(2 PRECEDING → CURRENT ROW)
+etc.
+```
+```
+"Where does SQL know to start summing from?" The answer is: because of the default window frame.
+
+When you specify an ORDER BY inside a window function, SQL behaves as if you had written:
+SUM(amount)
+OVER (
+    PARTITION BY customer_id
+    ORDER BY order_date
+    ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+)
+
+Let's break that down.
+UNBOUNDED PRECEDING = start from the first row in this partition.
+CURRENT ROW = stop at the current row.
+```
+| Requirement     | Window Function                          |
+| --------------- | ---------------------------------------- |
+| Previous row    | `LAG()`                                  |
+| Next row        | `LEAD()`                                 |
+| Running total   | `SUM() OVER (...)`                       |
+| Running average | `AVG() OVER (...)`                       |
+| Ranking         | `ROW_NUMBER()`, `RANK()`, `DENSE_RANK()` |
+
+
+======================================
+======================================
+
+**Question 7: Top 3 Highest Paid Employees from Each Department**
+
+EMPLOYEE :
+    emp_id INT,
+    emp_name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+
+```
+Interviewer: "Find the top 3 highest-paid employees in each department."
+Strong Candidate:
+"Before I start, I'd like to clarify one requirement. If two employees have the same salary and they're tied at the 3rd position, should I return both employees, or should I return exactly 3 employees per department?"
+
+That question tells the interviewer you understand that the choice between ROW_NUMBER(), RANK(), and DENSE_RANK() depends on the business requirement—not just SQL syntax.
+if yes ties allowed  = dense_rank()
+Exactly 3 =  row_number()
+```
+```
+SELECT *
+FROM (
+    SELECT emp_id,
+           emp_name,
+           department,
+           salary,
+           ROW_NUMBER() OVER (
+               PARTITION BY department
+               ORDER BY salary DESC
+           ) AS rnk
+    FROM employees
+) t
+WHERE rnk <= 3;
+```
+======================================
+======================================
+
+**Question 8: Find Customers Who Purchased on Consecutive Days**
+
+orders 
+    order_id INT,
+    customer_id INT,
+    order_date DATE
+```
+SELECT *
+FROM (
+    SELECT customer_id,
+           order_date,
+           CASE
+               WHEN LEAD(order_date) OVER (
+                       PARTITION BY customer_id
+                       ORDER BY order_date
+                    ) - order_date = INTERVAL '1 day'
+               THEN 1
+               ELSE 0
+           END AS cons
+    FROM orders
+) AS t
+WHERE cons = 1;
+```
+```
+Follow Up : Q. Suppose the table contain
+
+customer_id	order_date
+101	2025-01-01
+101	2025-01-01
+101	2025-01-02
+
+Would your current query still produce the correct answer? If not, how would you modify it?
+
+WITH uniqueorders AS (
+    SELECT DISTINCT customer_id, order_date
+    FROM orders
+)
+
+SELECT DISTINCT customer_id
+FROM (
+    SELECT customer_id,
+           order_date,
+           CASE
+               WHEN LEAD(order_date) OVER (
+                        PARTITION BY customer_id
+                        ORDER BY order_date
+                    ) - order_date = INTERVAL '1 day'
+               THEN 1
+               ELSE 0
+           END AS cons
+    FROM uniqueorders
+) t
+WHERE cons = 1;
+
+```
+
+
+**Question 9: First and Last Order for Each Customer**
+orders
+    order_id,
+    customer_id,
+    order_date,
+    amount
+
+```
+SELECT customer_id,
+       MIN(order_date) AS first_order,
+       MAX(order_date) AS last_order
+FROM orders
+GROUP BY customer_id;
+```
+```
+SELECT customer_id,
+       order_date,
+       FIRST_VALUE(order_date) OVER(PARTITION BY customer_id ORDER BY order_date) AS first_order,
+       LAST_VALUE(order_date) OVER(PARTITION BY customer_id ORDER BY order_date) AS last_order
+FROM orders;
+-- above query is WRONG Thats not how it works
+
+SELECT customer_id,
+       order_date,
+       FIRST_VALUE(order_date) OVER (PARTITION BY customer_id ORDER BY order_date) AS first_order,
+
+       LAST_VALUE(order_date) OVER (PARTITION BY customer_id ORDER BY order_date ROWS BETWEEN UNBOUNDED PRECEDING
+              AND UNBOUNDED FOLLOWING ) AS last_order
+FROM orders;
+
+
+### AND WHY WE DO THIS HAS THE INTERESTING ANSWER.
+```
+ROWS BETWEEN UNBOUNDED PRECEDING
+AND UNBOUNDED FOLLOWING
+
+Means :  "For every row, use the entire partition—from the first row to the last row."
+First row ------------------> Last row
+
+ROWS BETWEEN UNBOUNDED PRECEDING
+AND CURRENT ROW
+
+Means :  "For every row, use the entire partition—from the first row to current row."
+First row  ----------------->  Me
+```
+```
+Interview Tip ⭐
+
+If an interviewer asks:
+"Why isn't LAST_VALUE() returning the last value?"
+The expected answer is:
+
+"Because the default window frame ends at the current row. LAST_VALUE() returns the last row within the current frame, not necessarily the last row in the partition. To get the true last row, I need ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING."
+```
+
+
+**Question 10: Highest Paid Employee(s) in Each Department**
+
+```
+SELECT employee_id,
+       employee_name,
+       department,
+       salary
+FROM (
+    SELECT employee_id,
+           employee_name,
+           department,
+           salary,
+           DENSE_RANK() OVER (
+               PARTITION BY department
+               ORDER BY salary DESC
+           ) AS rnk
+    FROM employees
+) t
+WHERE rnk = 1;
+```
