@@ -25,6 +25,7 @@ OP
 
 **Solution :**
 ```
+-- Solution 01:
 SELECT c.customer_id,
        c.customer_name
 FROM customers c
@@ -34,6 +35,7 @@ WHERE c.customer_id NOT IN (
 );
 ```
 ```
+-- Solution 02:
 SELECT c.customer_id,
        c.customer_name
 FROM customers c
@@ -44,6 +46,7 @@ WHERE NOT EXISTS (
 );
 ```
 ```
+-- Solution 03:
 SELECT c.customer_id,
        c.customer_name
 FROM customers c
