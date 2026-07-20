@@ -53,8 +53,9 @@ FROM (
 WHERE total_month = 12;
 ```
 
-**Question 13 — Consecutive Monthly Purchases (Gaps & Islands)**
+**Question 13 — Consecutive Monthly Purchases (Gaps & Islands). Identify customers who purchased in 3 or more consecutive months during 2025**
 
+Orders
 | Column       | Data Type     |
 | ------------ | ------------- |
 | order_id     | INT           |
@@ -62,7 +63,26 @@ WHERE total_month = 12;
 | order_date   | DATE          |
 | order_amount | DECIMAL(10,2) |
 
+```
+WITH monthly_orders AS (
+    SELECT DISTINCT customer_id, MONTH(order_date) AS month_no
+    FROM orders WHERE order_date >= '2025-01-01' AND order_date < '2026-01-01'
+),
 
+islandcte AS (
+    SELECT
+        customer_id, month_no,
+        month_no - ROW_NUMBER() OVER ( PARTITION BY customer_id ORDER BY month_no ) AS island
+    FROM monthly_orders
+)
+
+SELECT
+    customer_id,
+    COUNT(*) AS freq
+FROM islandcte
+GROUP BY customer_id, island
+HAVING COUNT(*) >= 3;
+```
 
 
 =====================================
@@ -113,9 +133,91 @@ with amountwithsign as (
           end as amountsign
         from transaction
 )
-
 select  account_id, transaction_id, transaction_date, 
         transaction_type, amount,
         SUM(amountsign) OVER(PARTITON BY account_id order by transaction_id, transaction_date) as running_total from amountwithsign
 ```
+
+==============================
+==============================
+
+
+**Question Bonus : Write a query where user logged in for 5 or more days**
+
+User_logins
+    user_id
+    login_date
+```
+SELECT * FROM 
+(select  user_id, login_date,
+        CASE
+          when 
+            (lead(login_date)over(partition by user_id order by login_date) - login_date) = 1 and
+            (lead(login_date , 2)over(partition by user_id order by login_date) - login_date) = 2 and
+            (lead(login_date , 3)over(partition by user_id order by login_date) - login_date) = 3 and
+            (lead(login_date , 4)over(partition by user_id order by login_date) - login_date) = 4
+              then 1
+          else
+            0
+        END as flag
+  FROM user_logins) as t 
+WHERE flag = 1
+```
+```
+# NOTE :  First though came into my mind is we use the case when lead(col, 1/2/3/4) - login_date = 1/2/3/4
+But in this case we have to write the repeatativ elogic when we try to deal with the q qhere we are asked consecutive or streak check pattern
+
+# Solution :  TO deal with this we have GAPS and ISLAND strategy where we creates an island identifier.
+| user_id | login_date | island |
+| ------- | ---------- | ------ |
+| 1       | Jan1       | Dec31  |
+| 1       | Jan2       | Dec31  |
+| 1       | Jan3       | Dec31  |
+| 1       | Jan5       | Jan1   |
+| 1       | Jan6       | Jan1   |
+
+Notice here Notice that the first three rows have the same island. That means they belong to one streak. The next two rows have another island. That means they belong to another streak.
+So what do we group by? Exactly those columns that define one streak.
+* user_id (because each user's streaks are separate)
+* island (because each island is one streak)
+```
+```
+WITH cte AS (
+    SELECT
+        user_id,
+        login_date,
+        login_date - ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY login_date ) AS island
+    FROM user_logins
+)
+SELECT
+    user_id,
+    island,
+    COUNT(*) AS consecutive_days
+FROM cte
+GROUP BY
+    user_id,
+    island
+HAVING consecutive_days >= 5;
+```
+
+==================================
+==================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
