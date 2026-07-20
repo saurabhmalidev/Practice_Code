@@ -1,3 +1,5 @@
+=====================================
+=====================================
 **Question 11 — Nth Highest Salary (Parameterized)**
 
 | Column     | Data Type |
@@ -28,7 +30,8 @@ WHERE salary_rank = :N
 ORDER BY employee_id
 LIMIT 1;
 ```
-
+=====================================
+=====================================
 
 **Question 12 — Customers Who Purchased Every Month**
 
@@ -52,7 +55,8 @@ FROM (
 ) AS t
 WHERE total_month = 12;
 ```
-
+=====================================
+=====================================
 **Question 13 — Consecutive Monthly Purchases (Gaps & Islands). Identify customers who purchased in 3 or more consecutive months during 2025**
 
 Orders
@@ -83,8 +87,6 @@ FROM islandcte
 GROUP BY customer_id, island
 HAVING COUNT(*) >= 3;
 ```
-
-
 =====================================
 =====================================
 
@@ -137,10 +139,8 @@ select  account_id, transaction_id, transaction_date,
         transaction_type, amount,
         SUM(amountsign) OVER(PARTITON BY account_id order by transaction_id, transaction_date) as running_total from amountwithsign
 ```
-
 ==============================
 ==============================
-
 
 **Question Bonus : Write a query where user logged in for 5 or more days**
 
@@ -202,6 +202,16 @@ HAVING consecutive_days >= 5;
 
 ==================================
 ==================================
+
+**Question 15 — Customers with Consecutive Increasing Purchases (Window Functions + Gaps & Islands).**
+**A customer's purchase is considered increasing if the current order amount is strictly greater than the previous order amount. and Identify customers who have 3 or more consecutive orders where the order amount increased compared to the previous order.**
+| Column       | Data Type     |
+| ------------ | ------------- |
+| order_id     | INT           |
+| customer_id  | INT           |
+| order_date   | DATE          |
+| order_amount | DECIMAL(10,2) |
+
 
 
 
