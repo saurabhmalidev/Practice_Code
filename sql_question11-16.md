@@ -212,11 +212,82 @@ HAVING consecutive_days >= 5;
 | order_date   | DATE          |
 | order_amount | DECIMAL(10,2) |
 
+```
+with incresingorders as ( 
+  select * from (
+  select order_id, customer_id, order_date, order_amount,
+  CASE
+    when order_amount > lag(order_amount) over(partition by customer_id order by order_id) then 1
+    else 0
+  END as flag 
+  from orders
+  )as t where flag = 1
+),
+
+cons_orders as (
+      select order_id,
+           customer_id,
+          (order_id - row_number() over(partition by customer_id order by order_id)) as island
+      from incresingorders
+)
 
 
 
+select * from
+    (select customer_id,
+            count(*) as freq from cons_orders
+    group by island, customer_id
+    order by customer_id) as t
+where freq >=3
+```
+====================================
+====================================
+
+**Question 16 — Detect Salary Changes**
+**The HR team maintains a salary history for employees. Identify employees whose salary increased in every salary revision (i.e., every new salary is strictly greater than the previous one).**
+
+Table => empsal : emp_id, effective_date, salary
+Mistakes : 
+1. Underand which problem is gap and island and which are not.
+2. Need to extra logic to get the result, like sum(flag) = count(*) - 1
+
+```
+with filteredsal as (
+select emp_id, effective_date, salary,
+      CASE
+          when salary > lag(salary) over(partition by emp_id order by effective_date) then 1
+          else 0
+      END as flag
+from empsal)
 
 
+select emp_id from (select emp_id, 
+        CASE
+            when sum(flag) = count(*) - 1 then 'Yes'
+            else 'No'
+        END as Increment
+from filteredsal group by emp_id order by emp_id) as t  where Increment = 'Yes'
+```
+```
+WITH filteredsal AS (
+SELECT emp_id, effective_date, salary,
+      CASE
+          WHEN salary > lag(salary) OVER(partition by emp_id order by effective_date) THEN 1
+          ELSE 0
+      END AS flag
+FROM empsal)
+
+SELECT emp_id
+FROM filteredsal
+GROUP BY emp_id
+HAVING SUM(flag) = COUNT(*) - 1;
+```
+
+====================================
+====================================
+
+**Question 17 — Customers with Consecutive Purchase Days**
+**Find customers who have placed orders on 3 or more consecutive days.**
 
 
 
