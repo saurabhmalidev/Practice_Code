@@ -286,9 +286,6 @@ HAVING SUM(flag) = COUNT(*) - 1;
 ====================================
 ====================================
 
-**Question 17 — Customers with Consecutive Purchase Days**
-**Find customers who have placed orders on 3 or more consecutive days.**
-
 
 
 
