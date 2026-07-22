@@ -162,7 +162,7 @@ else:
     for num in lst:
         if num > largest:
             second = largest
-            largest = num                                  \            
+            largest = num                                              
         
         elif num != largest and num > second:    #<---------------TOOO IMPORTANT, Two conditions
             second = num
@@ -170,7 +170,7 @@ else:
     print(f"Largest : {largest}")
     if second == float('-inf'):
         print("No second largest")
-    else:
+    else:    
         print(f"Second Largest : {second}")
 ```  
 
@@ -178,5 +178,23 @@ else:
 
 
 **8. Sum all elements in a list without using sum().**
+
+```
+lst = [1,2,3,4,5]
+result = 0
+for i in lst:
+    result = i + result
+print(result)
+```
 **9. Find all pairs in a list that sum to a given target (two-sum, list version).**
+
+lst = [0,1,2,3,4,5]
+target = 5
+for i in range(len(lst):
+    for j in range(i+1,n):
+        if lst[i] + lst[j] == target:
+            print(f"{lst[i]},{lst[j]}")
+        else:
+            pass
+
 **10. Rotate a list left by k positions in-place.**
