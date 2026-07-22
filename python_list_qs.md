@@ -22,8 +22,7 @@
 22. Given a list of stock prices, find max profit with at most two transactions.
 23. Find all unique triplets in a list that sum to zero (3Sum).
 24. Implement a sliding window maximum for a list given window size k.
-```
-```
+
 ====================================
 ====================================
 
