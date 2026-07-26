@@ -76,9 +76,13 @@ For Customer 1:
 Order 1 → Completed → Match ✅
 Order 2 → Cancelled → Doesn't satisfy the ON condition ❌
 At least one match exists, so no NULL row is created.
-
-DEF/ IMP : For every row in the left table, SQL compares it with every row in the right table and evaluates the ON condition for each pair. After scanning all right-table rows, if at least one pair satisfies the ON condition, SQL outputs all matching rows. If no pair satisfies the ON condition, then a LEFT JOIN outputs exactly one row with NULL values for the right table.
 ```
+
+DEF/ IMP : For every row in the left table, SQL compares it with every row in the right table and 
+evaluates the ON condition for each pair. After scanning all right-table rows, if at least one pair 
+satisfies the ON condition, SQL outputs all matching rows. If no pair satisfies the ON condition, then 
+a LEFT JOIN outputs exactly one row with NULL values for the right table.
+
 ================================
 ================================
 
