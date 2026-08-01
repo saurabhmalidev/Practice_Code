@@ -17,7 +17,7 @@ NOTE : Solving problem using LEFT JOIN
 SELECT c.customer_id
 FROM customers c
 LEFT JOIN orders o
-ON c.customer_id = o.customer_id
+ON c.customer_id = o.customer_id          
 WHERE o.customer_id IS NULL;
 ```
 ====================================
@@ -50,7 +50,7 @@ SELECT c.customer_id
 FROM customers c
 LEFT JOIN orders o
 ON c.customer_id = o.customer_id
-AND o.status = 'Completed'
+AND o.status = 'Completed'    # This condition will return True where order status is Completer and remaining NULL.
 WHERE o.customer_id IS NULL;
 ```
 ```
