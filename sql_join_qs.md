@@ -1,4 +1,4 @@
-**Find customers who never placed an order.**
+**Q. Find customers who never placed an order.**
 | customer_id | name    |
 | ----------- | ------- |
 | 1           | Alice   |
