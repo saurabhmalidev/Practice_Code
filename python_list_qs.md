@@ -212,7 +212,6 @@ for i in range(k):
 
 lst.extend(temp)
 print(lst)
-
 ```
 
 **11. Flatten a nested list (list of lists) into a single list.**
