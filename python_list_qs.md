@@ -187,14 +187,86 @@ for i in lst:
 print(result)
 ```
 **9. Find all pairs in a list that sum to a given target (two-sum, list version).**
-
+```
+# aka TWO SUM Problem
 lst = [0,1,2,3,4,5]
 target = 5
-for i in range(len(lst):
-    for j in range(i+1,n):
+for i in range(len(lst)):
+    for j in range(i+1,len(lst)):
         if lst[i] + lst[j] == target:
             print(f"{lst[i]},{lst[j]}")
         else:
             pass
+```
 
 **10. Rotate a list left by k positions in-place.**
+```
+** Q. **
+lst = [0,1,2,3,4,5]
+k = 3
+
+# 1st : Not in place solution
+temp = []
+for i in range(k):
+    lst.append(lst.pop(0))
+
+lst.extend(temp)
+print(lst)
+
+```
+
+**11. Flatten a nested list (list of lists) into a single list.**
+```
+lst = [[1,1,1],[2,4,8],[3,9,27]]
+
+result = []
+for sub_list in lst:
+    for i in sub_list:
+        result.append(i)
+print(result)
+```
+
+**12. Find the intersection and union of two lists without using set().**
+
+```
+ints = []
+unilist = []
+for i range(range(lat1)):
+    if lst1[i] in lst2:
+        ints.append(lst1[i])
+```
+
+**13. Move all zeros in a list to the end while keeping the order of non-zero elements.**
+```
+```
+**14. Find the missing number in a list of 1 to n.**
+```
+```
+**15. Group anagrams together from a list of strings.**
+```
+```
+**16. Find the majority element (appears more than n/2 times) without extra space.**
+```
+```
+**17. Find the maximum sum of a contiguous subarray (Kadane's algorithm).**
+```
+```
+**18. Find the longest increasing subsequence in a list.**
+```
+```
+**19. Given a list of intervals, merge all overlapping intervals.**
+```
+```
+**20. Find the median of two sorted lists in O(log(min(n,m))) time.**
+```
+```
+**21. Find the trapping rainwater problem — max water trapped between bars represented as a list.**
+```
+```
+**22. Given a list of stock prices, find max profit with at most two transactions.**
+```
+```
+**23. Find all unique triplets in a list that sum to zero (3Sum).**
+```
+```
+**24. Implement a sliding window maximum for a list given window size k.**
