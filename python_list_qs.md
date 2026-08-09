@@ -13,15 +13,6 @@
 13. Move all zeros in a list to the end while keeping the order of non-zero elements.
 14. Find the missing number in a list of 1 to n.
 15. Group anagrams together from a list of strings.
-16. Find the majority element (appears more than n/2 times) without extra space.
-17. Find the maximum sum of a contiguous subarray (Kadane's algorithm).
-18. Find the longest increasing subsequence in a list.
-19. Given a list of intervals, merge all overlapping intervals.
-20. Find the median of two sorted lists in O(log(min(n,m))) time.
-21. Find the trapping rainwater problem — max water trapped between bars represented as a list.
-22. Given a list of stock prices, find max profit with at most two transactions.
-23. Find all unique triplets in a list that sum to zero (3Sum).
-24. Implement a sliding window maximum for a list given window size k.
 
 ====================================
 ====================================
@@ -79,7 +70,7 @@ print(seen)
 ```
 lst = [1,3,5,12,5,44,44,132,0,1,55]
 
-seen = set()    # starts empty
+seen = set()    # starts empty #USes hash internally
 result = []     # start empty
 
 for i in range(len(lst)):
@@ -99,7 +90,12 @@ lookup takes roughly the same tiny amount of time — O(1), constant time.
 ```
 
 **Q4. Count occurrences of each element in a list.**
-
+```
+from collections import Counter
+lst = [1,3,5,12,5,44,44,132,0,1,55]
+freq = Counter(lst)
+print(freq)
+```
 NOTE :  No need of seen here, seen works, but it's O(n²) time complexity
 ```
 lst = [1,3,5,12,5,44,44,132,0,1,55]
@@ -113,12 +109,7 @@ for i in lst:
 for key, value in my_dict.items():
     print(f"{key} : {value}")
 ```
-```
-from collections import Counter
-lst = [1,3,5,12,5,44,44,132,0,1,55]
-freq = Counter(lst)
-print(freq)
-```
+
 
 **Q5. Check if a list is a palindrome**
 
@@ -208,7 +199,7 @@ k = 3
 # 1st : Not in place solution
 temp = []
 for i in range(k):
-    lst.append(lst.pop(0))
+    lst.append(lst.pop(0))    #<<<<<<<<< pop()  takes index as element
 
 lst.extend(temp)
 print(lst)
@@ -228,44 +219,86 @@ print(result)
 **12. Find the intersection and union of two lists without using set().**
 
 ```
-ints = []
-unilist = []
-for i range(range(lat1)):
+lst1 = [1,2,3,4,5]
+lst2 = [4,5,6,7,8]
+ints_list = []
+uni_list = []
+
+for i in range(len(lst1)): 
     if lst1[i] in lst2:
-        ints.append(lst1[i])
+        ints_list.append(lst1[i])
+
+for num in lst1 + lst2:     #<<<<<<<<< SPECIAL
+    if num not in uni_list:
+        uni_list.append(num)
+    
+print(ints_list)
+print(uni_list)
 ```
 
 **13. Move all zeros in a list to the end while keeping the order of non-zero elements.**
 ```
+lst1 = [0,1,2,0,3,4,5,0]
+
+# move all zeros to the end 
+zeros = []
+nonzero = []
+for num in lst1:
+    if num == 0:
+        zeros.append(num)
+    else:
+        nonzero.append(num)
+
+nonzero.extend(zeros)
+print(nonzero)
 ```
 **14. Find the missing number in a list of 1 to n.**
 ```
+lst = [1,2,3,4,5,6,7,8,10]
+n = 10
+
+corr_sum = sum([i for i in range(1,n+1)])   #or "sum(range(1,n+1))"
+lst_sum = sum(lst)
+
+result = corr_sum - lst_sum
+print(result)
 ```
+
+
 **15. Group anagrams together from a list of strings.**
 ```
-```
-**16. Find the majority element (appears more than n/2 times) without extra space.**
-```
-```
-**17. Find the maximum sum of a contiguous subarray (Kadane's algorithm).**
-```
-```
-**18. Find the longest increasing subsequence in a list.**
-```
-```
-**19. Given a list of intervals, merge all overlapping intervals.**
-```
-```
-**20. Find the median of two sorted lists in O(log(min(n,m))) time.**
+words = ["eat", "tea", "tan", "ate", "nat", "bat"]
+
+result = []
+for i in range(len(words)):
+    for j in range(i+1, len(words)):
+        if sorted(words[i]) == sorted(words[j]):
+            result.append([words[i],words[j]])
+print(result)
+
+O/P : [['eat', 'tea'], ['eat', 'ate'], ['tea', 'ate'], ['tan', 'nat']]
+WHICH IS WRONG
 ```
 ```
-**21. Find the trapping rainwater problem — max water trapped between bars represented as a list.**
+words = ["eat", "tea", "tan", "ate", "nat", "bat"]
+
+result = []
+used = []
+
+for i in range(len(words)):
+    if words[i] in used:
+        continue
+
+    group = [words[i]]
+    used.append(words[i])
+
+    for j in range(i + 1, len(words)):
+        if sorted(words[i]) == sorted(words[j]):
+            group.append(words[j])
+            used.append(words[j])
+
+    result.append(group)
+
+print(result)
 ```
-```
-**22. Given a list of stock prices, find max profit with at most two transactions.**
-```
-```
-**23. Find all unique triplets in a list that sum to zero (3Sum).**
-```
-```
-**24. Implement a sliding window maximum for a list given window size k.**
+
