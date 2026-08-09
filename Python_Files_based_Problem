@@ -1,1 +1,48 @@
+**Q1 — "Read customers.csv and count records where customer_id is not empty**
+```
+import csv
 
+with open('data/customers.csv','r') as file:
+    reader = csv.DictReader(file)
+
+    count = 0
+    for row in reader:
+        if row['customer_id']:
+            count += 1
+
+    print(f"Valid Customer Count : {count}")
+
+#OR Functional Code
+
+def count_valid_customers(file_path):
+    count = 0
+
+    with open(file_path, "r") as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            if row["customer_id"]:
+                count += 1
+
+    return count
+
+result = count_valid_customers('data/customers.csv')
+print(f"Valid Customer Count : {result}")
+```
+
+**Q2. Write a Python function that reads the CSV and counts how many employees have a missing or empty salary. **
+```
+
+import csv
+def invalid_employees(file_path):
+    count = 0
+    with open(file_path, 'r') as file:
+        reader = csv.DictReader(file)
+
+        for row in reader:
+            if row['Salary'] == 'NULL' or row['Salary'] is None or row['Salary'] == '':
+                count += 1
+    return count
+
+print(f"Invalid Employee salary : {invalid_customers('data/employees.csv')}")
+```
