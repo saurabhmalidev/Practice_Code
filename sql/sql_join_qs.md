@@ -1,8 +1,8 @@
-Q1. Find customers who never placed an order. (LEFT JOIN)
-Q2. Find customers who have never placed a completed order.(LEFT JOIN)
-Q3. Employees Earning More Than Their Manager. (Self Join)
-Q4. Median Salary. (Self Join)
-Q5. Products Purchased Together (Self Join)
+Q1. Find customers who never placed an order. (LEFT JOIN) \
+Q2. Find customers who have never placed a completed order.(LEFT JOIN) \
+Q3. Employees Earning More Than Their Manager. (Self Join) \
+Q4. Median Salary. (Self Join) \
+Q5. Products Purchased Together (Self Join) \
 
 
 **Q1. Find customers who never placed an order.**
