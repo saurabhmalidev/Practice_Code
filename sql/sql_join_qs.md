@@ -1,4 +1,12 @@
-**Q. Find customers who never placed an order.**
+Q1. Find customers who never placed an order. (LEFT JOIN)
+Q2. Find customers who have never placed a completed order.(LEFT JOIN)
+Q3. Employees Earning More Than Their Manager. (Self Join)
+Q4. Median Salary. (Self Join)
+Q5. Products Purchased Together (Self Join)
+
+
+**Q1. Find customers who never placed an order.**
+
 | customer_id | name    |
 | ----------- | ------- |
 | 1           | Alice   |
@@ -23,7 +31,7 @@ WHERE o.customer_id IS NULL;
 ====================================
 ====================================
 
-**Find customers who have never placed a completed order.**
+**Q2. Find customers who have never placed a completed order.**
 | customer_id |
 | ----------- |
 | 1           |
@@ -85,5 +93,41 @@ a LEFT JOIN outputs exactly one row with NULL values for the right table.
 
 ================================
 ================================
+**Q3. Employees Earning More Than Their Manager (Self Join)**
 
+| emp_id | emp_name | manager_id | salary |
+| -----: | -------- | ---------: | -----: |
+|      1 | Alice    |       NULL | 100000 |
+|      2 | Bob      |          1 |  90000 |
+|      3 | Charlie  |          1 | 120000 |
+|      4 | David    |          2 |  95000 |
+|      5 | Eva      |          2 |  85000 |
+
+#Fundaamental rule of the Self Join:
+  1. Always name the table properly \
+     employee : emp \
+     employee : manager \
+  3. Sequence of the join condition matters and read them properly.\ 
+     like {emp.manager_id == manager.emp_id} Read aloud : """The employee's manager id is equals to manager's employee id"""
+```
+SELECT
+    emp.emp_id,
+    emp.emp_name,
+    emp.salary as employee_salary,
+    manager.salary as manager_salary
+FROM employee emp
+JOIN employee manager
+    ON emp.manager_id = manager.emp_id
+WHERE emp.salary > manager.salary;
+```
+=================================
+=
+**Q4. Median Salary**
+
+=================================
+=
+**Q5.Products Purchased Together (Self Join)**
+
+=================================
+=
 
