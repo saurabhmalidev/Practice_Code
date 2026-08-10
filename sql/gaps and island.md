@@ -8,8 +8,8 @@ Orders
 | order_date   | DATE          |
 | order_amount | DECIMAL(10,2) |
 
-
-
+```
+```
 WITH monthly_orders AS (
     SELECT DISTINCT customer_id, MONTH(order_date) AS month_no
     FROM orders WHERE order_date >= '2025-01-01' AND order_date < '2026-01-01'
@@ -36,6 +36,7 @@ HAVING COUNT(*) >= 3;
 Similar Q : Consecutive Numbers" (LeetCode 180) or "Stadium Traffic" (LeetCode 601). \
 Jobs : asked in EY
 ```
+jobs
 |'success' | '2025-08-01')|
 |'success' | '2025-08-02')|
 |'fail'    | '2025-08-03' |
