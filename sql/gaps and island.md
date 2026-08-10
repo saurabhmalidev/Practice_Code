@@ -1,5 +1,5 @@
 **Q. Consecutive Monthly Purchases (Gaps & Islands). Identify customers who purchased in 3 or more consecutive months during 2025**
-
+```
 Orders
 | Column       | Data Type     |
 | ------------ | ------------- |
@@ -8,7 +8,8 @@ Orders
 | order_date   | DATE          |
 | order_amount | DECIMAL(10,2) |
 
-```
+
+
 WITH monthly_orders AS (
     SELECT DISTINCT customer_id, MONTH(order_date) AS month_no
     FROM orders WHERE order_date >= '2025-01-01' AND order_date < '2026-01-01'
@@ -31,9 +32,10 @@ HAVING COUNT(*) >= 3;
 =====================================
 =====================================
 
-**Q. Find the Consecutive Login Streak where employee logged in.**
-Similar Q : Consecutive Numbers" (LeetCode 180) or "Stadium Traffic" (LeetCode 601).
+**Q. Find the Consecutive Login Streak where employee logged in.** \
+Similar Q : Consecutive Numbers" (LeetCode 180) or "Stadium Traffic" (LeetCode 601). \
 Jobs : asked in EY
+```
 |'success' | '2025-08-01')|
 |'success' | '2025-08-02')|
 |'fail'    | '2025-08-03' |
@@ -48,7 +50,7 @@ expected output
 | success    | 2025-08-01    | 2025-08-02    |
 | success    | 2025-08-13    | 2025-08-13    |
 +------------+---------------+---------------+
-
+```
 ```
 CREATE TABLE jobs (
   job_status TEXT NOT NULL,
